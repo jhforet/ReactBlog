@@ -50,3 +50,18 @@ axios, json-server, react-router-dom 추가로 공부하기
     * 게시글 작성 일자 추가  
         + BlogForm에 Date.now()를 사용해서 저장될 때 현재시간이 기록.  
         + 숫자로 보이니까 우리가 좋게 볼 수 있도록 함수를 생성  
+
+6. **블로그 만들기 6**
+    * Edit 페이지 만들기  
+        + routes.js에 id별로 Edit 페이지가 나오도록 추가  
+        + ShowPage에서 타이틀 옆에 react-router-dom Link로 Edit 버튼 추가  
+        + EditPage에 BlogForm을 연결해서 컴포넌트 재활용  
+        + 누르는 버튼에 따라서 다른 내용의 BlogForm을 보여주기 위해서 함수 추가, 해당 함수가 true일 경우 해당 페이지 출력  
+    * BlogForm 수정  
+        + BlogForm에 {editing} 을 prop으로 넣기 
+        + editing에 따라서 다른 내용이 노출되도록 {editing ? '' : ''} 수정  
+        + useEffect를 이용해서 edit 페이지일때는 데이터를 노출  
+        + if문과 axios.patch로 수정사항 업데이트 기능 추가  
+        + 수정사항이 있을 때만 버튼이 활성화 되는 기능 추가  
+        + 뒤로가기 버튼과 goBack 함수 추가  
+        + 공개 여부 기능 추가  

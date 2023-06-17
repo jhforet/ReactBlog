@@ -24,6 +24,10 @@ const routes = [
     {
         path: '/blogs/:id',
         component: ShowPage
+    },
+    {
+        path: '/blogs/:id/edit',
+        component: EditPage
     }
 ];
 

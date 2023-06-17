@@ -2,6 +2,7 @@ import { useParams } from "react-router";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import LoadingSpinner from "../components/LoadingSpinner";
+import { Link } from "react-router-dom";
 
 const ShowPage = () => {
     const { id } = useParams();
@@ -30,7 +31,17 @@ const ShowPage = () => {
 
     return (
         <div>
-            <h1>{post.title}</h1>
+            <div className="d-flex">
+                <h1 className="flex-grow-1">{post.title}</h1>
+                <div>
+                    <Link
+                        className="btn btn-primary"
+                        to={`/blogs/${id}/edit`}
+                        >
+                        Edit
+                    </Link>
+                </div>
+            </div>
             {/* 작성 일자 추가 */}
             <small className="text-muted">
                 작성일: {printDate(post.createdAt)}
