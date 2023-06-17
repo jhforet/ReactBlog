@@ -23,7 +23,6 @@ axios, json-server, react-router-dom 추가로 공부하기
         + prop-types가 정확하게 어떤 기능을 하는지 모르겠어서 추가로 공부하기  
     * ListPage.js에 Link를 이용해서 생성 버튼 추가  
 
-
 4. **블로그 만들기 4**
     * 전에는 React Router v5를 사용하다가 v6로 업데이트 하면서 변경된 컴포넌트나 속성등을 수정  
     * 게시글을 클릭하면 수정 페이지로 이동  
@@ -39,3 +38,15 @@ axios, json-server, react-router-dom 추가로 공부하기
     * Create New 버튼 기능 추가
         + 생성버튼을 누르면 연결되는 CreatePage에 BlogForm 컴포넌트를 임포트해서 글을 입력하는 페이지가 연결되도록 수정  
         + BlogForm에 useNavigate()를 추가해서 글을 등록하면 /blogs 로 이동하게 수정  
+
+5. **블로그 만들기 5**
+    * 게시글 카드를 클릭하면 내용을 보여주는 페이지 추가  
+        + ShowPage.js 작성하고 Routes.js에 추가  
+    * 게시글 db를 받아와서 화면에 보여주기  
+        + ShowPage에 axios를 임포트해서 db 불러오기  
+        + useState를 임포트하고 초기값은 null을 넣어 주고 받은 데이터를 setPost로 담는다.  
+        + 받는 시간이 걸릴 수 있으므로 LoadingSpinner을 임포트 해서 추가해준다.  
+        + ListPage에 Card 부분에 onClick 이벤트를 백틱을 사용해서 {post.id}로 연결되게 수정  
+    * 게시글 작성 일자 추가  
+        + BlogForm에 Date.now()를 사용해서 저장될 때 현재시간이 기록.  
+        + 숫자로 보이니까 우리가 좋게 볼 수 있도록 함수를 생성  

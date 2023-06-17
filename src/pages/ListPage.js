@@ -59,7 +59,7 @@ const ListPage = () => {
                     <Card
                         key={post.id}
                         title={post.title}
-                        onClick={() => navigate(`/blogs/edit`)}
+                        onClick={() => navigate(`/blogs/${post.id}`)}
                     >
                         <div>
                             <button

@@ -15,6 +15,7 @@ const BlogForm = () => {
         axios.post('http://localhost:3001/posts', {
             title,
             body,
+            createdAt: Date.now()
         }).then(() => {
             navigate('/blogs');
         })
