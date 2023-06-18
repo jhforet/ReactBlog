@@ -73,3 +73,19 @@ axios, json-server, react-router-dom 추가로 공부하기
         + Adminpage에서만 모든 글이 보이고 삭제 할 수 있도록 수정  
         + Navbar에 Admin버튼 추가와 Css 수정  
         + 카드 컴포넌트 Css수정, 글 생성하면 /admin으로 이동하게 수정  
+
+8. **블로그 만들기 8**
+    * Pagination 기능 추가  
+        + 게시글이 늘어나서 부트스트랩을 이용해서 페이지네이션 컴포넌트 추가  
+        + a 태그는 사용하지 경고가 뜨니까 button태그로 수정, 속성 알파벳도 리엑트에 맞게 수정  
+        + BlogList에 Pagination 컴포넌트 연결  
+        + json.sever 깃허브 페이지(https://github.com/typicode/json-server#paginate)를 참고해서 설정  
+        + 1페이지에 5개씩 보이고 마지막 작성된 글이 상단으로 올라오게 수정  
+        + 위에 가져온 쿼리스트링 부분을 보기 편하게 key와 value으로 수정  
+        + getPosts 함수에 if문으로 !isAdmin인 경우 publish: true를 추가  
+        + 현재페이지를 props로 받아서 현재 페이지에 active 효과 추가  
+        + 번호 클릭시 onClick 으로 active 효과가 이동하게 수정  
+        + 페이지 넘버와 한 페이지에 노출되는 게시글 수, 총 게시글, 첫페이지, 마지막 페이지를 변수로 state 지정  
+        + propTypes 정의해서 페이지에 페이지네이션 번호 지정  
+        + 페이지를 뒤로 가기했을때 홈이 아닌 이전 페이지로 갈수 있도록 함수 추가  
+        + useCallback을 사용해서 useEffect에 callback 추가  
