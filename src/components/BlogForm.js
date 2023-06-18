@@ -16,6 +16,9 @@ const BlogForm = ({ editing }) => {
     // 기본값을 false로 줘서 체크가 안된 상태로 시작
     const [publish, setPublish] = useState(false);
     const [originalPublish, setOriginalPublish] = useState(false);
+    // 게시글 작성시 유효성 검사용
+    const [titleError, setTitleError] = useState(false);
+    const [bodyError, setBodyError] = useState(false)
 
     useEffect(() => {
         if (editing) {
@@ -48,26 +51,49 @@ const BlogForm = ({ editing }) => {
         };
     };
 
+    // 유효성 검사용 코드
+    const validateForm = () => {
+        let validated = true;
+
+        if (title === '') {
+            setTitleError(true);
+            validated = false;
+        }
+
+        if (body === '') {
+            setBodyError(true);
+            validated = false;
+        }
+
+        return validated;
+    }
+
     const onSubmit = () => {
-        // axios를 이용해서 db.json에 저장 3000번 포트는 사용중이여서 3001번으로 지정
-        if (editing) {
-            // editing이 true이면 patch로 title, body를 수정 아니면 create 페이지로 연결
-            axios.patch(`http://localhost:3001/posts/${id}`, {
-                title,
-                body,
-                publish
-            }).then(() => {
-                navigate(`/blogs/${id}`);
-            })
-        } else {
-            axios.post('http://localhost:3001/posts', {
-                title,
-                body,
-                createdAt: Date.now(),
-                publish
-            }).then(() => {
-                navigate('/admin');
-            })
+        // 초기값 지정
+        setTitleError(false);
+        setBodyError(false);
+        // validateForm()에서 validated = true이면 다음 로직이 진행되게 수정
+        if (validateForm()) {
+            // axios를 이용해서 db.json에 저장 3000번 포트는 사용중이여서 3001번으로 지정
+            if (editing) {
+                // editing이 true이면 patch로 title, body를 수정 아니면 create 페이지로 연결
+                axios.patch(`http://localhost:3001/posts/${id}`, {
+                    title,
+                    body,
+                    publish
+                }).then(() => {
+                    navigate(`/blogs/${id}`);
+                })
+            } else {
+                axios.post('http://localhost:3001/posts', {
+                    title,
+                    body,
+                    createdAt: Date.now(),
+                    publish
+                }).then(() => {
+                    navigate('/admin');
+                })
+            };
         };
     };
 
@@ -83,24 +109,30 @@ const BlogForm = ({ editing }) => {
             <div className='mb-3'>
                 <label className='form-label'>Title</label>
                 <input
-                    className='form-control'
+                    className={`form-control  ${titleError ? 'border-danger' : ''}`}
                     value={title}
                     onChange={(event) => {
                         setTitle(event.target.value);
                     }}
                 />
+                {titleError && <div className="text-danger">
+                    Title is required.
+                </div>}
             </div>
             {/* body 내용칸 만들기 */}
             <div className='mb-3'>
                 <label className='from-label'>Body</label>
                 <textarea
-                    className='form-control'
+                    className={`form-control  ${bodyError ? 'border-danger' : ''}`}
                     value={body}
                     onChange={(event) => {
                         setBody(event.target.value);
                     }}
                     rows="20"
                 />
+                {bodyError && <div className="text-danger">
+                    Title is required.
+                </div>}
             </div>
             <div className="form-check mb-3">
                 <input
