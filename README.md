@@ -65,3 +65,11 @@ axios, json-server, react-router-dom 추가로 공부하기
         + 수정사항이 있을 때만 버튼이 활성화 되는 기능 추가  
         + 뒤로가기 버튼과 goBack 함수 추가  
         + 공개 여부 기능 추가  
+
+7. **블로그 만들기 7**
+    * Admin 페이지 추가와 비공개 리스트 수정  
+        + Publish가 false인 글은 /blogs에서 안보이도록 ListPage에 tilter로 수정  
+        + AdminPage 추가 및 routes에 추가  
+        + Adminpage에서만 모든 글이 보이고 삭제 할 수 있도록 수정  
+        + Navbar에 Admin버튼 추가와 Css 수정  
+        + 카드 컴포넌트 Css수정, 글 생성하면 /admin으로 이동하게 수정  

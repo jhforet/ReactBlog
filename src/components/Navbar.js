@@ -6,8 +6,19 @@ const NavBar = () => {
         <nav className='navbar navbar-dark bg-dark' >
             <div className='container'>
                 <Link className="navbar-brand" to="/">Home</Link>
-                <ul className='navbar-nav'>
-                    <li className='nav-item'>
+                <ul
+                    style={{ flexDirection: 'row' }}
+                    className='navbar-nav'>
+                    <li className="nav-item me-2">
+                        <NavLink
+                            className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
+                            aria-current="page"
+                            to="/admin"
+                        >
+                            Admin
+                        </NavLink>
+                    </li>
+                    <li className='nav-items'>
                         {/* NavLink 기능은 리엑트 라우터 페이지 참고 */}
                         <NavLink
                             className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}

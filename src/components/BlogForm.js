@@ -66,7 +66,7 @@ const BlogForm = ({ editing }) => {
                 createdAt: Date.now(),
                 publish
             }).then(() => {
-                navigate('/blogs');
+                navigate('/admin');
             })
         };
     };
