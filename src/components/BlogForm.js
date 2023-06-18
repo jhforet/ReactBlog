@@ -3,7 +3,7 @@ import axios from 'axios'
 import { useNavigate, useParams } from "react-router-dom";
 import propTypes from "prop-types";
 
-const BlogForm = ({ editing }) => {
+const BlogForm = ({ editing, addToast }) => {
     const navigate = useNavigate();
     const { id } = useParams();
 
@@ -91,6 +91,10 @@ const BlogForm = ({ editing }) => {
                     createdAt: Date.now(),
                     publish
                 }).then(() => {
+                    addToast({
+                        type: 'success',
+                        text: 'Successfully created!'
+                    });
                     navigate('/admin');
                 })
             };
@@ -98,7 +102,6 @@ const BlogForm = ({ editing }) => {
     };
 
     const onChangePublish = (e) => {
-        console.log(e.target.checked)
         setPublish(e.target.checked)
     };
 
@@ -131,7 +134,7 @@ const BlogForm = ({ editing }) => {
                     rows="20"
                 />
                 {bodyError && <div className="text-danger">
-                    Title is required.
+                    Body is required.
                 </div>}
             </div>
             <div className="form-check mb-3">

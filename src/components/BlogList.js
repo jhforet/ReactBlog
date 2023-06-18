@@ -5,6 +5,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Pagination from './Pagination';
 import propTypes from 'prop-types';
+import Toast from './Toast';
+import useToast from '../hooks/toast';
 
 const BlogList = ({ isAdmin }) => {
     const navigate = useNavigate();
@@ -18,6 +20,8 @@ const BlogList = ({ isAdmin }) => {
     const [numberOfPosts, setNumberOfPosts] = useState(0);
     const [numberOfPages, setNumberOfPages] = useState(0);
     const [searchText, setSearchText] = useState('');
+
+    const [toasts, addToast, deleteToast] = useToast();
     const limit = 5;
 
     useEffect(() => {
@@ -71,8 +75,12 @@ const BlogList = ({ isAdmin }) => {
 
         axios.delete(`http://localhost:3001/posts/${id}`).then(() => {
             setPosts(prevPosts => prevPosts.filter(post => post.id !== id));
-        })
-    }
+            addToast({
+                text: 'SuccessFully deleted',
+                type: 'success'
+            });
+        });
+    };
 
     if (loading) {
         return (
@@ -112,6 +120,10 @@ const BlogList = ({ isAdmin }) => {
 
     return (
         <div>
+            <Toast
+                toasts={toasts}
+                deleteToast={deleteToast}
+            />
             {/* 검색창 */}
             <input
                 type="text"

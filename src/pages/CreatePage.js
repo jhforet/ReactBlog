@@ -1,8 +1,8 @@
 import BlogForm from "../components/BlogForm";
 
-const CreatePage = () => {
+const CreatePage = ({addToast}) => {
     return (
-        <BlogForm />
+        <BlogForm addToast={addToast}/>
     );
 };
 
