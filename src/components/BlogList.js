@@ -3,8 +3,8 @@ import { useState, useEffect, useCallback } from 'react';
 import Card from '../components/Card';
 import { useNavigate, useLocation } from 'react-router-dom';
 import LoadingSpinner from '../components/LoadingSpinner';
-import { bool } from 'prop-types';
 import Pagination from './Pagination';
+import propTypes from 'prop-types';
 
 const BlogList = ({ isAdmin }) => {
     const navigate = useNavigate();
@@ -17,6 +17,7 @@ const BlogList = ({ isAdmin }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [numberOfPosts, setNumberOfPosts] = useState(0);
     const [numberOfPages, setNumberOfPages] = useState(0);
+    const [searchText, setSearchText] = useState('');
     const limit = 5;
 
     useEffect(() => {
@@ -26,17 +27,18 @@ const BlogList = ({ isAdmin }) => {
     // 뒤로가기를 하면 이전에 본 페이지가 나오도록 하는 함수 추가
     const onClickPageButton = (page) => {
         navigate(`${location.pathname}?page=${page}`)
+        setCurrentPage(page);
         getPosts(page)
     }
 
     // 데이터 가져오기
     const getPosts = useCallback((page = 1) => {
-        setCurrentPage(page);
         let params = {
             _page: page,
             _limit: limit,
             _sort: 'id',
             _order: 'desc',
+            title_like: searchText
         }
 
         // Admin이 아닐경우 publish true만 보여주기
@@ -51,12 +53,16 @@ const BlogList = ({ isAdmin }) => {
             setPosts(res.data);
             setLoading(false);
         });
-    }, [isAdmin]);
+    }, [isAdmin, searchText]);
 
+    // [pageParam, getPosts] 이렇게 되어있으면 getPosts 함수 내용에 따라서 엔터를 누르지 않아도 변화가 있을 때 마다 요청이 되고 있음
+    // 엔터를 눌렀을 때 처음 한번한 실행하면 되므로 빈 배열로 수정한다.
+    // useEffect가 setCurrentPage, getPosts를 실행해 줬는데 이제는 한번만 실행하므로 클릭하면 실행하도록 추가한다.
+    // onClickPageButton, onSearch 함수에 setCurrentPage, getPosts를 추가한다.
     useEffect(() => {
         setCurrentPage(parseInt(pageParam) || 1);
         getPosts(parseInt(pageParam) || 1);
-    }, [pageParam, getPosts]);
+    }, []);
 
     const deleteBlog = (e, id) => {
         // 클릭하면 삭제되지 않고 상세페이지로 이동하는 이벤트 버블링이 발생한다. 
@@ -73,10 +79,6 @@ const BlogList = ({ isAdmin }) => {
             <LoadingSpinner />
         );
     };
-    // 게시글이 0개 일때 안내 텍스트 노출
-    if (posts.length === 0) {
-        return (<div>No blog posts found</div>)
-    }
 
     const renderBlogList = () => {
         return posts.map(post => {
@@ -99,20 +101,43 @@ const BlogList = ({ isAdmin }) => {
         });
     };
 
+    // 엔터키를 눌렀을 때만 게시글 불러오기 
+    const onSearch = (e) => {
+        if (e.key === 'Enter') {
+            navigate(`${location.pathname}?page=1`)
+            setCurrentPage(1);
+            getPosts(1);
+        };
+    };
+
     return (
         <div>
-            {renderBlogList()}
-            {numberOfPages > 1 && <Pagination
-                currentPage={currentPage}
-                numberOfPages={numberOfPages}
-                onClick={onClickPageButton}
-            />}
+            {/* 검색창 */}
+            <input
+                type="text"
+                placeholder='Search..'
+                className='form-control'
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+                onKeyUp={onSearch}
+            />
+            <hr />
+            {posts.length === 0
+                ? <div>No blog posts found</div>
+                : <>
+                    {renderBlogList()}
+                    {numberOfPages > 1 && <Pagination
+                        currentPage={currentPage}
+                        numberOfPages={numberOfPages}
+                        onClick={onClickPageButton}
+                    />}
+                </>}
         </div>
     )
 };
 
 BlogList.propTypes = {
-    isAdmin: bool,
+    isAdmin: propTypes.bool,
 }
 
 BlogList.defaultProps = {
