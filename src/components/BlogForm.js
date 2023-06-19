@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import axios from 'axios'
 import { useNavigate, useParams } from "react-router-dom";
 import propTypes from "prop-types";
+import useToast from "../hooks/toast";
+import LoadingSpinner from './LoadingSpinner';
 
-const BlogForm = ({ editing, addToast }) => {
+const BlogForm = ({ editing }) => {
     const navigate = useNavigate();
     const { id } = useParams();
 
@@ -19,6 +21,9 @@ const BlogForm = ({ editing, addToast }) => {
     // 게시글 작성시 유효성 검사용
     const [titleError, setTitleError] = useState(false);
     const [bodyError, setBodyError] = useState(false)
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState('');
+    const { addToast } = useToast();
 
     useEffect(() => {
         if (editing) {
@@ -30,8 +35,18 @@ const BlogForm = ({ editing, addToast }) => {
                 setOriginalBody(res.data.body);
                 setPublish(res.data.publish);
                 setOriginalPublish(res.data.publish);
-            });
-        };
+                setLoading(false);
+            }).catch(e => {
+                setError('something went wrong in db');
+                addToast({
+                    type: 'danger',
+                    text: 'something went wrong in db'
+                })
+                setLoading(false);
+            })
+        } else {
+            setLoading(false);
+        }
     }, [id, editing]);
 
     // 변동 사항 확인 함수
@@ -83,19 +98,29 @@ const BlogForm = ({ editing, addToast }) => {
                     publish
                 }).then(() => {
                     navigate(`/blogs/${id}`);
+                }).catch(e => {
+                    addToast({
+                        type: 'danger',
+                        text: 'We could not update blog'
+                    })
                 })
             } else {
                 axios.post('http://localhost:3001/posts', {
                     title,
                     body,
-                    createdAt: Date.now(),
-                    publish
+                    publish,
+                    createdAt: Date.now()
                 }).then(() => {
                     addToast({
                         type: 'success',
                         text: 'Successfully created!'
                     });
                     navigate('/admin');
+                }).catch(e => {
+                    addToast({
+                        type: 'danger',
+                        text: 'We could not create blog'
+                    })
                 })
             };
         };
@@ -104,6 +129,14 @@ const BlogForm = ({ editing, addToast }) => {
     const onChangePublish = (e) => {
         setPublish(e.target.checked)
     };
+
+    if (loading) {
+        return <LoadingSpinner />
+    }
+
+    if (error) {
+        return (<div>{error}</div>)
+    }
 
     return (
         <div>

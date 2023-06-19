@@ -111,3 +111,13 @@ axios, json-server, react-router-dom 추가로 공부하기
         + Toast동작을 하는 함수가 여러 컴포넌트에서 중복되서 사용하고 있어서 훅으로 분리  
         + 삭제는 같은 페이지에서 되서 메세지가 나오지만 생성은 Admin 페이지로 연결해놔서 메세지를 보기전에 페이지가 넘어가는 문제 발생  
             + Toast와 훅을 제일 상위에 있는 App에 연결해서 페이지가 넘어가도 토스트 메세지가 계속 나오도록 수정  
+    
+12. **블로그 만들기 11-2**
+    * Toast Notification2 - Redux Toolkit으로 전환  
+
+13. **블로그 만들기 12**
+    * auth redux slice 만들기  
+    * Protected Route  
+    * Not Found Page  
+    * 로그인 상태 유지하기  
+    * 블로그 삭제 후 페이지 1로 이동  

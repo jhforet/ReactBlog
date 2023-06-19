@@ -1,11 +1,10 @@
-import axios from 'axios';
 import { useState, useEffect, useCallback } from 'react';
-import Card from '../components/Card';
 import { useNavigate, useLocation } from 'react-router-dom';
+import axios from 'axios';
+import propTypes from 'prop-types';
+import Card from '../components/Card';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Pagination from './Pagination';
-import propTypes from 'prop-types';
-import Toast from './Toast';
 import useToast from '../hooks/toast';
 
 const BlogList = ({ isAdmin }) => {
@@ -13,15 +12,15 @@ const BlogList = ({ isAdmin }) => {
     const location = useLocation();
     const params = new URLSearchParams(location.search);
     const pageParam = params.get('page');
-
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const [numberOfPosts, setNumberOfPosts] = useState(0);
     const [numberOfPages, setNumberOfPages] = useState(0);
     const [searchText, setSearchText] = useState('');
+    const [error, setError] = useState('');
 
-    const [toasts, addToast, deleteToast] = useToast();
+    const { addToast } = useToast();
     const limit = 5;
 
     useEffect(() => {
@@ -56,7 +55,14 @@ const BlogList = ({ isAdmin }) => {
             setNumberOfPosts(res.headers['x-total-count']);
             setPosts(res.data);
             setLoading(false);
-        });
+        }).catch(e => {
+            setLoading(false);
+            setError('Something went wrong in database');
+            addToast({
+                text: 'Something went wrong',
+                type: 'danger'
+            })
+        })
     }, [isAdmin, searchText]);
 
     // [pageParam, getPosts] 이렇게 되어있으면 getPosts 함수 내용에 따라서 엔터를 누르지 않아도 변화가 있을 때 마다 요청이 되고 있음
@@ -74,11 +80,17 @@ const BlogList = ({ isAdmin }) => {
         e.stopPropagation();
 
         axios.delete(`http://localhost:3001/posts/${id}`).then(() => {
-            setPosts(prevPosts => prevPosts.filter(post => post.id !== id));
+            // setPosts(prevPosts => prevPosts.filter(post => post.id !== id));
+            getPosts(1);
             addToast({
                 text: 'SuccessFully deleted',
                 type: 'success'
             });
+        }).catch(e => {
+            addToast({
+                text: 'The blog could not be deleted.',
+                type: 'danger'
+            })
         });
     };
 
@@ -118,12 +130,12 @@ const BlogList = ({ isAdmin }) => {
         };
     };
 
+    if (error) {
+        return <div>{error}</div>
+    }
+
     return (
         <div>
-            <Toast
-                toasts={toasts}
-                deleteToast={deleteToast}
-            />
             {/* 검색창 */}
             <input
                 type="text"

@@ -4,6 +4,7 @@ import EditPage from "./pages/EditPage";
 import ListPage from "./pages/ListPage";
 import ShowPage from "./pages/ShowPage";
 import AdminPage from "./pages/AdminPage";
+import NotFoundPage from "./pages/NotFoundPage";
 
 const routes = [
     {
@@ -16,19 +17,26 @@ const routes = [
     },
     {
         path: '/admin',
-        component: AdminPage
+        component: AdminPage,
+        auth: true
     },
     {
         path: '/blogs/create',
-        component: CreatePage
+        component: CreatePage,
+        auth: true
     },
     {
         path: '/blogs/:id/edit',
-        component: EditPage
+        component: EditPage,
+        auth: true
     },
     {
         path: '/blogs/:id',
         component: ShowPage
+    },
+    {
+        path: '*',
+        component: NotFoundPage
     }
 ];
 
