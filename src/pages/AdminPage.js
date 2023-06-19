@@ -8,7 +8,7 @@ const AdminPage = () => {
                 <h1>Admin</h1>
                 <div>
                     {/* 생성 버튼 추가 */}
-                    <Link to="/blogs/create" className="btn btn-success">
+                    <Link to="/blogs/create" className="btn btn-dark">
                         Create New
                     </Link>
                 </div>

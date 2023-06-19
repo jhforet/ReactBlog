@@ -110,7 +110,7 @@ const BlogList = ({ isAdmin }) => {
                 >
                     {isAdmin ? (<div>
                         <button
-                            className='btn btn-danger btn-sm'
+                            className='btn btn-outline-dark btn-sm'
                             onClick={(e) => deleteBlog(e, post.id)}
                         >
                             Delete
@@ -136,26 +136,40 @@ const BlogList = ({ isAdmin }) => {
 
     return (
         <div>
-            {/* 검색창 */}
-            <input
-                type="text"
-                placeholder='Search..'
-                className='form-control'
-                value={searchText}
-                onChange={(e) => setSearchText(e.target.value)}
-                onKeyUp={onSearch}
-            />
-            <hr />
-            {posts.length === 0
-                ? <div>No blog posts found</div>
-                : <>
-                    {renderBlogList()}
-                    {numberOfPages > 1 && <Pagination
-                        currentPage={currentPage}
-                        numberOfPages={numberOfPages}
-                        onClick={onClickPageButton}
-                    />}
-                </>}
+            <div className="row grid text-center">
+                <figure className="figure col col-2">
+                    <img
+                        src="/iu4.jpg"
+                        className="figure-img img-fluid rounded"
+                        alt="iu"
+                    />
+                    <figcaption className="figure-caption">
+                        아이유의 소소한 이야기
+                    </figcaption>
+                </figure>
+                <div className="col col-10">
+                    {/* 검색창 */}
+                    <input
+                        type="text"
+                        placeholder='Search..'
+                        className='form-control'
+                        value={searchText}
+                        onChange={(e) => setSearchText(e.target.value)}
+                        onKeyUp={onSearch}
+                    />
+                    <hr />
+                    {posts.length === 0
+                        ? <div>No blog posts found</div>
+                        : <>
+                            {renderBlogList()}
+                            {numberOfPages > 1 && <Pagination
+                                currentPage={currentPage}
+                                numberOfPages={numberOfPages}
+                                onClick={onClickPageButton}
+                            />}
+                        </>}
+                </div>
+            </div>
         </div>
     )
 };

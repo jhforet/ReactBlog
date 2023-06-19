@@ -98,7 +98,7 @@ const BlogForm = ({ editing }) => {
                     publish
                 }).then(() => {
                     navigate(`/blogs/${id}`);
-                }).catch(e => {
+                }).catch(() => {
                     addToast({
                         type: 'danger',
                         text: 'We could not update blog'
@@ -116,7 +116,7 @@ const BlogForm = ({ editing }) => {
                         text: 'Successfully created!'
                     });
                     navigate('/admin');
-                }).catch(e => {
+                }).catch(() => {
                     addToast({
                         type: 'danger',
                         text: 'We could not create blog'
@@ -184,7 +184,7 @@ const BlogForm = ({ editing }) => {
             </div>
 
             <button
-                className='btn btn-primary'
+                className='btn btn-dark'
                 onClick={onSubmit}
                 // 논리 연산자 &&(and)를 사용해서 Edit페이지로 들어와서 editing 이 true이고 !(not)isEdited 또한 true일 경우에 버튼을 비활성화 시킨다.
                 // isEdited함수는 내용이 수정된 경우 true를 반환한다.
@@ -195,7 +195,7 @@ const BlogForm = ({ editing }) => {
                 {editing ? 'Edit' : 'Post'}
             </button>
             <button
-                className="btn btn-danger ms-2"
+                className="btn btn-secondary ms-2"
                 onClick={goBack}
             >
                 Cancel

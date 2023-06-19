@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "../store/authSlice";
 
 const NavBar = () => {
+    let location = useLocation();
     const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
     const dispatch = useDispatch();
 
@@ -11,8 +12,7 @@ const NavBar = () => {
         <nav className='navbar navbar-dark bg-dark' >
             <div className='container'>
                 <Link className="navbar-brand" to="/">Home</Link>
-                {/* {location.pathname != '/' &&  */}
-                <ul
+                {location.pathname != '/' && <ul
                     style={{ flexDirection: 'row' }}
                     className='navbar-nav'>
                     <li className="nav-item me-2">
@@ -48,7 +48,7 @@ const NavBar = () => {
                             Blogs
                         </NavLink>
                     </li>
-                </ul>
+                </ul>}
             </div>
         </nav >
     )

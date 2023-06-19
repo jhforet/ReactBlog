@@ -121,3 +121,12 @@ axios, json-server, react-router-dom 추가로 공부하기
     * Not Found Page  
     * 로그인 상태 유지하기  
     * 블로그 삭제 후 페이지 1로 이동  
+
+14. **블로그 만들기 13**
+    * HomePage 추가  
+    * bottom.js 추가  
+    * HomePage에서는 메뉴가 안보이게 수정  
+    * 블로그 리스트 레이아웃 수정  
+    * 블로그 글 개행으로 출력  
+    * 버튼 색상 변경  
+    * 페이지네이션 색상 변경  

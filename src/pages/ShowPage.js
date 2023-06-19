@@ -32,24 +32,40 @@ const ShowPage = () => {
     }
 
     return (
-        <div>
-            <div className="d-flex">
-                <h1 className="flex-grow-1">{post.title}</h1>
-                {isLoggedIn && <div>
-                    <Link
-                        className="btn btn-primary"
-                        to={`/blogs/${id}/edit`}
-                    >
-                        Edit
-                    </Link>
-                </div>}
+        <div className="container title_cover mt-3">
+            <div className="row grid">
+                <figure className="figure col col-2">
+                    <img
+                        src="/iu4.jpg"
+                        className="figure-img img-fluid rounded"
+                        alt="iu"
+                    />
+                    <figcaption className="figure-caption">
+                        아이유의 소소한 이야기
+                    </figcaption>
+                </figure>
+                <div className="col col-1"></div>
+
+                <div className="col col-9">
+                    <div className="d-flex">
+                        <h1 className="flex-grow-1">{post.title}</h1>
+                        {isLoggedIn && <div>
+                            <Link
+                                className="btn btn-dark"
+                                to={`/blogs/${id}/edit`}
+                            >
+                                Edit
+                            </Link>
+                        </div>}
+                    </div>
+                    {/* 작성 일자 추가 */}
+                    <small className="text-muted">
+                        작성일: {printDate(post.createdAt)}
+                    </small>
+                    <hr />
+                    <pre>{post.body}</pre>
+                </div>
             </div>
-            {/* 작성 일자 추가 */}
-            <small className="text-muted">
-                작성일: {printDate(post.createdAt)}
-            </small>
-            <hr />
-            <p>{post.body}</p>
         </div>
     )
 }

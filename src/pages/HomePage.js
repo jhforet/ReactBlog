@@ -8,12 +8,12 @@ const HomePage = () => {
             </div>
             <div className="title">
                 아이유의 소소한 이야기
-                <button
+                <a
                     className="btn btn-dark"
                     href='/blogs'
                 >
                     블로그 보기
-                </button>
+                </a>
             </div>
         </div >
     );
